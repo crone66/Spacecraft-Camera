@@ -2,6 +2,9 @@
 
 namespace CameraProject
 {
+    /// <summary>
+    /// Spacecraft camera
+    /// </summary>
     public class Camera
     {
         private float pitch; //Up/Down
@@ -26,6 +29,9 @@ namespace CameraProject
         private Matrix view;
         private Matrix projection;
 
+        /// <summary>
+        /// Camera field of view (min. value 0.01f, max. value 179.99f)
+        /// </summary>
         public float Fov
         {
             get
@@ -46,6 +52,9 @@ namespace CameraProject
             }
         }
 
+        /// <summary>
+        /// Window aspect ratio
+        /// </summary>
         public float AspectRatio
         {
             get
@@ -60,6 +69,9 @@ namespace CameraProject
             }
         }
 
+        /// <summary>
+        /// Camera near plane
+        /// </summary>
         public float NearPlane
         {
             get
@@ -74,6 +86,9 @@ namespace CameraProject
             }
         }
 
+        /// <summary>
+        /// Camera far plane
+        /// </summary>
         public float FarPlane
         {
             get
@@ -88,6 +103,9 @@ namespace CameraProject
             }
         }
 
+        /// <summary>
+        /// Camera view matrix
+        /// </summary>
         public Matrix View
         {
             get
@@ -102,6 +120,9 @@ namespace CameraProject
             }
         }
 
+        /// <summary>
+        /// Camera projection matrix
+        /// </summary>
         public Matrix Projection
         {
             get
@@ -116,6 +137,9 @@ namespace CameraProject
             }
         }
 
+        /// <summary>
+        /// Camera pitch rotation value
+        /// </summary>
         public float Pitch
         {
             get
@@ -134,6 +158,9 @@ namespace CameraProject
             }
         }
 
+        /// <summary>
+        /// Camera yaw rotation value
+        /// </summary>
         public float Yaw
         {
             get
@@ -151,6 +178,9 @@ namespace CameraProject
             }
         }
 
+        /// <summary>
+        /// Camera roll rotation value
+        /// </summary>
         public float Roll
         {
             get
@@ -168,6 +198,9 @@ namespace CameraProject
             }
         }
 
+        /// <summary>
+        /// Camera position
+        /// </summary>
         public Vector3 Position
         {
             get
@@ -181,6 +214,9 @@ namespace CameraProject
             }
         }       
 
+        /// <summary>
+        /// Camera rotation matrix
+        /// </summary>
         public Matrix RotationMatrix
         {
             get
@@ -189,6 +225,17 @@ namespace CameraProject
             }
         }
 
+        /// <summary>
+        /// Initzializes a camera
+        /// </summary>
+        /// <param name="cameraPosition">Camera spawn position</param>
+        /// <param name="moveSpeed">Movement speed</param>
+        /// <param name="rotationSpeed">Rotation speed</param>
+        /// <param name="zoomSpeed">Zoom speed</param>
+        /// <param name="fov">Field of view</param>
+        /// <param name="aspectRatio">Window aspect ratio</param>
+        /// <param name="nearPlane">Camera near plane</param>
+        /// <param name="farPlane">Camera far plane</param>
         public Camera(Vector3 cameraPosition, float moveSpeed, float rotationSpeed, float zoomSpeed, float fov, float aspectRatio, float nearPlane, float farPlane)
         {
             Position = cameraPosition;
@@ -203,6 +250,13 @@ namespace CameraProject
             ZoomSpeed = zoomSpeed;
         }
 
+        /// <summary>
+        /// Updates camera
+        /// </summary>
+        /// <param name="gameTime">Game time</param>
+        /// <param name="movementVector">Indicates movement directions</param>
+        /// <param name="rotationVector">Indicates rotation directions (x=pitch, y=yaw, z=roll)</param>
+        /// <param name="zoomDirection">Indicates zoom direction</param>
         public void Update(GameTime gameTime, Vector3 movementVector, Vector3 rotationVector, float zoomDirection)
         {
             float elapsedTime = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -214,12 +268,18 @@ namespace CameraProject
             UpdateView();
         }
 
+        /// <summary>
+        /// Updates view and rotation matrix
+        /// </summary>
         private void UpdateView()
         {
             rotationMatrix = Matrix.CreateFromYawPitchRoll(yaw, pitch, roll);
             View = Matrix.CreateLookAt(Position, Position + rotationMatrix.Forward, rotationMatrix.Up);
         }
 
+        /// <summary>
+        /// Updates projection matrix
+        /// </summary>
         private void UpdateProjection()
         {
             if (projectionIsDirty)
@@ -229,6 +289,11 @@ namespace CameraProject
             }
         }
 
+        /// <summary>
+        /// Updates camera position by the given movement vector
+        /// </summary>
+        /// <param name="elapsedTime">Elapsed time since last update</param>
+        /// <param name="moveVector">Indicates movement directions</param>
         private void Move(float elapsedTime, Vector3 moveVector)
         {
             if(moveVector != Vector3.Zero)
@@ -237,6 +302,13 @@ namespace CameraProject
             }
         }
 
+        /// <summary>
+        /// Updates rotation values
+        /// </summary>
+        /// <param name="elapsedTime">Elapsed time since last update</param>
+        /// <param name="pitch">Indicates whenther to rotate the camera around the x axis</param>
+        /// <param name="yaw">Indicates whenther to rotate the camera around the y axis</param>
+        /// <param name="roll">Indicates whenther to rotate the camera around the z axis</param>
         private void Rotate(float elapsedTime, float pitch, float yaw, float roll)
         {
             if(roll != 0)
@@ -251,6 +323,11 @@ namespace CameraProject
             UpdateView();
         }
 
+        /// <summary>
+        /// Updates field of view to zoom
+        /// </summary>
+        /// <param name="elapsedTime">Elapsed time since last update</param>
+        /// <param name="zoomDirection">Indicates the zoom direction (1 = Zoom In, 2 = Zoom out)</param>
         private void Zoom(float elapsedTime, float zoomDirection)
         {
             if(zoomDirection != 0)

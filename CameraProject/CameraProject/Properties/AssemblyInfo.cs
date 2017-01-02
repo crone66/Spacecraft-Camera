@@ -1,15 +1,14 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CameraProject")]
-[assembly: AssemblyProduct("CameraProject")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyCopyright("Copyright ©  2017")]
+[assembly: AssemblyTitle("Spacecraft-Camera example project")]
+[assembly: AssemblyProduct("Spacecraft-Camera example project")]
+[assembly: AssemblyDescription("Spacecraft-Camera example")]
+[assembly: AssemblyCompany("Marcel Croonenbroeck")]
+[assembly: AssemblyCopyright("Copyright © Marcel Croonenbroeck 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
